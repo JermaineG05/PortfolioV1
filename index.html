@@ -1,0 +1,28 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Jermaine Gervacio – Portfolio</title><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="style.css"><script>
+try{if(!sessionStorage.getItem('navIntroDone')&&sessionStorage.getItem('navFrom')===null){document.documentElement.classList.add('nav-intro');}}catch(e){}
+</script><script>/*data-from-script*/try{var _f=sessionStorage.getItem("navFrom");if(_f!==null){document.documentElement.setAttribute("data-from",_f)}}catch(e){}</script></head><body>
+<nav class="nav" aria-label="Main"><a href="index.html" class="is-active" aria-current="page" aria-label="Home"><span class="base" aria-hidden="true">Home</span><span class="bold" aria-hidden="true">Home</span><span class="sq" aria-hidden="true"></span></a><a href="about.html" aria-label="About Me"><span class="base" aria-hidden="true">About Me</span><span class="bold" aria-hidden="true">About Me</span><span class="sq" aria-hidden="true"></span></a><a href="works.html" aria-label="Works"><span class="base" aria-hidden="true">Works</span><span class="bold" aria-hidden="true">Works</span><span class="sq" aria-hidden="true"></span></a><a href="contact.html" aria-label="Contact"><span class="base" aria-hidden="true">Contact</span><span class="bold" aria-hidden="true">Contact</span><span class="sq" aria-hidden="true"></span></a></nav>
+<main class="hero">
+  <h1>Jermaine Gervacio</h1>
+  <img class="photo" src="assets/jermaine.png" alt="Portrait of Jermaine Gervacio">
+  <h2>PORTFOLIO</h2>
+  <p>Virtual Assistant</p>
+  <a class="cta" href="works.html">View my works</a>
+</main>
+
+<script>
+(function(){
+  var h1=document.querySelector('.hero h1'),h2=document.querySelector('.hero h2');
+  function fit(el,frac){
+    el.style.fontSize='100px';
+    var w=el.getBoundingClientRect().width||1;
+    el.style.fontSize=(100*frac*document.documentElement.clientWidth/w)+'px';
+  }
+  function run(){
+    var small=document.documentElement.clientWidth<720;
+    fit(h1,small?.92:.747);fit(h2,small?.8:.612);
+  }
+  run();window.addEventListener('resize',run);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(run);
+})();
+</script><script src="nav.js"></script></body></html>
