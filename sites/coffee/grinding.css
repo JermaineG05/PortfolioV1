@@ -1,0 +1,58 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: white;
+}
+
+.title {
+    height: 100vh;
+    background: url('coffeegrind.webp') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 100px;
+    position: relative;
+    margin-top: 70px;
+}
+
+.title::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.title-content {
+    max-width: 600px;
+    position: relative;
+    z-index: 2;
+}
+
+.title h1 {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.text-section {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.text-section h2 {
+    font-size: 26px;
+    margin-bottom: 15px;
+}
+
+.text-section p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}

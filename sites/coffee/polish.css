@@ -1,0 +1,210 @@
+/* ===== Shared styles (loaded after each page's own CSS) ===== */
+:root {
+    --accent: #ff7b00;
+    --accent-dark: #e66a00;
+    --ease: cubic-bezier(.22, .61, .36, 1);
+    --nav-h: 70px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scrollbar-gutter: stable; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: var(--nav-h); }
+body { -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { max-width: 100%; }
+::selection { background: var(--accent); color: #fff; }
+
+@keyframes fadeUp   { from { opacity: 0; transform: translateY(34px); } to { opacity: 1; transform: none; } }
+@keyframes wordUp   { from { transform: translateY(112%); } to { transform: none; } }
+@keyframes heroIn   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes kenburns { from { transform: scale(1.03); } to { transform: scale(1.17) translate(-1.5%, -1%); } }
+@keyframes eyebrow  { from { opacity: 0; letter-spacing: .9em; } to { opacity: 1; letter-spacing: .3em; } }
+@keyframes barGrow  { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes imgWipe  { from { clip-path: inset(0 0 100% 0); transform: scale(1.3); } to { clip-path: inset(0); transform: scale(1); } }
+@keyframes wheel    { 0%, 100% { transform: translateY(0); opacity: 1; } 60% { transform: translateY(12px); opacity: .15; } }
+@keyframes ripple   { to { transform: scale(4); opacity: 0; } }
+
+@supports not (scrollbar-gutter: stable) { html { overflow-y: scroll; } }
+
+/* ---- Focus ---- */
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+/* ---- Scroll progress bar ---- */
+.scroll-progress {
+    position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+    background: var(--accent); transform: scaleX(0); transform-origin: left;
+    z-index: 200; pointer-events: none;
+}
+
+/* ---- Navbar: one definition for every page, fixed size, never animates in ---- */
+.navbar {
+    display: flex; justify-content: space-between; align-items: center;
+    height: var(--nav-h); padding: 0 clamp(14px, 3vw, 32px);
+    background: rgba(0, 0, 0, .82);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .5);
+    transition: background .3s;
+}
+.navbar.scrolled { background: rgba(0, 0, 0, .94); }
+.navbar-logo { flex: 0 0 auto; }
+.navbar-logo img {
+    display: block; width: 50px; height: 50px; object-fit: cover; border-radius: 50%;
+    transition: transform .4s var(--ease), box-shadow .3s;
+}
+.navbar-logo img:hover { transform: rotate(-8deg) scale(1.1); box-shadow: 0 0 0 2px var(--accent); }
+.navbar nav { display: block; }
+.navbar-menu { display: flex; flex-wrap: nowrap; align-items: center; justify-content: center; list-style: none; margin: 0; padding: 0; }
+.navbar-menu li { margin: 0 15px; padding: 0; }
+.navbar-menu li:last-child { margin-right: 0; }
+.navbar-menu a {
+    position: relative; display: inline-block; padding: 4px 0;
+    text-decoration: none; color: #fff; font-size: 16px; line-height: 1.5; font-weight: 500;
+    transition: color .3s;
+}
+.navbar-menu a:hover { color: var(--accent); }
+.navbar-menu a::after {
+    content: ''; position: absolute; left: 0; bottom: -2px;
+    width: 100%; height: 2px; background: var(--accent);
+    transform: scaleX(0); transform-origin: right;
+    transition: transform .3s var(--ease);
+}
+.navbar-menu a:hover::after,
+.navbar-menu a.active::after { transform: scaleX(1); transform-origin: left; }
+.navbar-menu a.active { color: var(--accent); }
+.navbar-menu a:active { transform: scale(.94); }
+
+/* ---- Hero ---- */
+.title { overflow: hidden; margin-top: var(--nav-h); }
+.hero-bg { position: absolute; left: 0; right: 0; top: -15%; bottom: 0; z-index: 0; will-change: transform; animation: heroIn 1s ease backwards; }
+.hero-bg i { position: absolute; inset: 0; background-size: cover; background-position: center; background-repeat: no-repeat; animation: kenburns 24s ease-in-out infinite alternate; }
+
+.title-content h3 {
+    margin-bottom: 12px; color: var(--accent); text-transform: uppercase;
+    font-size: 16px; font-weight: 600; letter-spacing: .3em;
+    animation: eyebrow 1.1s var(--ease) .15s backwards;
+}
+.title h1 { line-height: 1.2; text-shadow: 0 2px 12px rgba(0, 0, 0, .5); }
+.js .title-content h1:not(.split) { visibility: hidden; }
+.w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .14em; margin-bottom: -.14em; }
+.w > span { display: inline-block; animation: wordUp .95s var(--ease) calc(.35s + var(--i) * .09s) backwards; }
+.title-content::after {
+    content: ''; display: block; width: 84px; height: 4px; margin-top: 22px;
+    background: var(--accent); border-radius: 2px; transform-origin: left;
+    animation: barGrow .9s var(--ease) 1.1s backwards;
+}
+
+.scroll-hint {
+    position: absolute; left: 50%; bottom: 100px; margin-left: -15px; z-index: 2;
+    width: 30px; height: 48px; border: 2px solid rgba(255, 255, 255, .75); border-radius: 18px;
+    transition: opacity .4s; animation: fadeUp 1s var(--ease) 1.8s backwards;
+}
+.scroll-hint::after {
+    content: ''; position: absolute; left: 50%; top: 9px; width: 4px; height: 9px; margin-left: -2px;
+    border-radius: 2px; background: #fff; animation: wheel 1.7s ease-in-out infinite;
+}
+.scroll-hint.hide { opacity: 0; }
+
+/* ---- Scroll reveal (text, cards, accordion) ---- */
+.js :is(.text-section > *, .info-section .info-card, .info-cards .card, .text-block, .accordion-item):not(.in-view) { opacity: 0; }
+:is(.text-section > *, .info-section .info-card, .info-cards .card, .text-block, .accordion-item).in-view {
+    animation: fadeUp .85s var(--ease) var(--d, 0s) backwards;
+}
+
+/* ---- Text sections ---- */
+.text-section h2 { position: relative; display: inline-block; padding-bottom: 10px; }
+.text-section h2::after {
+    content: ''; position: absolute; left: 50%; bottom: 0;
+    width: 48px; height: 3px; background: var(--accent); border-radius: 2px;
+    transform: translateX(-50%) scaleX(.2);
+    transition: transform .7s var(--ease) .35s;
+}
+.text-section h2.in-view::after { transform: translateX(-50%) scaleX(1); }
+
+/* ---- Homepage info cards ---- */
+.info-card {
+    text-decoration: none;
+    transition: transform .35s var(--ease), box-shadow .35s;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .45);
+    -webkit-tap-highlight-color: transparent;
+}
+.info-card::before { transition: background .35s; }
+.info-card:hover { transform: translateY(-8px) scale(1.04); box-shadow: 0 14px 30px rgba(255, 123, 0, .25); }
+.info-card:hover::before { background: rgba(0, 0, 0, .3); }
+.info-card:active { transform: translateY(-2px) scale(.98); transition-duration: .1s; }
+.info-card span { transition: transform .35s var(--ease), color .3s; }
+.info-card:hover span { transform: translateX(6px); color: var(--accent); }
+.info-card.in-view span { animation: fadeUp .8s var(--ease) calc(var(--d, 0s) + .35s) backwards; }
+
+/* ---- Roasting cards ---- */
+.card { overflow: hidden; transition: transform .35s var(--ease), box-shadow .35s; }
+.card img { transition: transform .6s var(--ease); }
+.card.in-view img { animation: imgWipe 1.2s var(--ease) calc(var(--d, 0s) + .2s) backwards; }
+.card:hover { transform: translateY(-8px); box-shadow: 0 14px 30px rgba(255, 123, 0, .22); }
+.card:hover img { transform: scale(1.08); }
+.card:active { transform: translateY(-3px) scale(.99); transition-duration: .1s; }
+.card h3 { transition: letter-spacing .4s var(--ease); }
+.card:hover h3 { letter-spacing: .03em; }
+.text-block { transition: transform .35s var(--ease), box-shadow .35s; }
+.text-block:hover { transform: translateY(-4px); box-shadow: 0 12px 26px rgba(255, 123, 0, .18); }
+
+/* ---- Accordion ---- */
+.accordion-item { transition: border-color .3s, box-shadow .3s; }
+.accordion-item:hover { border-color: var(--accent); }
+.accordion-item.open { border-color: var(--accent); box-shadow: 0 8px 22px rgba(255, 123, 0, .15); }
+.accordion-header {
+    position: relative; font-family: inherit; padding-right: 48px;
+    transition: background .3s, color .3s, padding-left .3s var(--ease);
+}
+.accordion-header::after {
+    content: ''; position: absolute; right: 20px; top: 50%;
+    width: 8px; height: 8px;
+    border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+    transform: translateY(-70%) rotate(45deg);
+    transition: transform .35s var(--ease);
+}
+.accordion-header:hover { background: #38342f; color: var(--accent); padding-left: 22px; }
+.accordion-header:active { transform: scale(.995); background: #403b35; }
+.accordion-item.open .accordion-header { color: var(--accent); }
+.accordion-item.open .accordion-header::after { transform: translateY(-30%) rotate(225deg); }
+.accordion-content { transition: max-height .45s var(--ease), opacity .35s; opacity: 0; }
+.accordion-item.open .accordion-content { opacity: 1; }
+.accordion-content p { padding: 0 18px; line-height: 1.7; }
+
+/* ---- Ripple on clickable things ---- */
+.ripple-host { position: relative; overflow: hidden; }
+.ripple-dot {
+    position: absolute; width: 60px; height: 60px; margin: -30px 0 0 -30px;
+    border-radius: 50%; background: rgba(255, 123, 0, .35);
+    transform: scale(0); animation: ripple .6s ease-out forwards; pointer-events: none;
+}
+
+/* ---- Leaving the page: content fades, the navbar stays put ---- */
+body.leaving > *:not(.navbar):not(.scroll-progress):not(.to-top):not(.back-to-portfolio):not(script) {
+    opacity: 0; transform: translateY(-12px);
+    transition: opacity .22s ease, transform .22s ease;
+}
+
+/* ---- Back to top ---- */
+.to-top {
+    position: fixed; right: 20px; bottom: 20px; width: 46px; height: 46px;
+    border: none; border-radius: 50%; background: var(--accent); color: #fff;
+    font-size: 20px; cursor: pointer; z-index: 150;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .5);
+    opacity: 0; transform: translateY(20px) scale(.8); pointer-events: none;
+    transition: opacity .3s, transform .3s var(--ease), background .3s;
+}
+.to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+.to-top:hover { background: var(--accent-dark); transform: translateY(-4px); }
+.to-top:active { transform: scale(.9); }
+
+/* ---- Small screens ---- */
+@media (max-width: 700px) {
+    .navbar-menu li { margin: 0 0 0 14px; }
+    .navbar-menu li:first-child { margin-left: 0; }
+    .navbar-menu a { font-size: 14px; }
+    .title { padding: 40px 24px; }
+    .title h1 { font-size: 34px; }
+    .info-section { margin-top: -40px; padding: 0 16px; }
+    .info-card { width: 100%; max-width: 360px; }
+    .accordion { width: 92%; }
+    .scroll-hint { display: none; }
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Catalogue · SPCC</title>
+    <link rel="icon" type="image/png" href="../assets/img/spcc.png">
+    <link rel="stylesheet" href="../assets/css/fonts.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+<script>try{if(!sessionStorage.getItem("lms-demo-user")){location.replace("../login.html")}}catch(e){}</script>
+<script>try{var t=new URLSearchParams(location.search).get("type");document.documentElement.setAttribute("data-kind",t==="journal"?"journal":"book");if(!sessionStorage.getItem("lms-demo-ack")){document.documentElement.classList.add("has-notice")}}catch(e){document.documentElement.setAttribute("data-kind","book")}</script>
+</head>
+<body data-base="../" data-splash="1">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+    <div class="site-header__inner">
+        <a class="brand" href="../admin/index.html">
+            <img src="../assets/img/spcc.png" alt="" width="44" height="44">
+            <span class="brand__text">
+                <strong>Systems Plus Computer College</strong>
+                <small>Library · Admin</small>
+            </span>
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+        <nav id="site-nav" class="site-nav" aria-label="Main">
+            <a href="../admin/index.html" aria-current="page">Catalogue</a><a href="../admin/logs.html">Borrowing logs</a><a href="../admin/archives.html">Archives</a><a href="../register.html">Add admin</a><a href="../logout.html">Log out</a>
+            <a class="site-nav__home" href="../index.html">Home</a>
+        </nav>
+    </div>
+</header>
+<main id="main" class="container" data-page="admin-items" data-config="{}">
+    <div class="page-head">
+        <div>
+            <h1><span data-k="book">Books</span><span data-k="journal">Journals &amp; Research</span> catalogue</h1>
+            <p class="muted">Add, edit and archive items. Stock changes automatically as students borrow and return.</p>
+        </div>
+        <button class="btn btn-primary" type="button" id="add-btn">+ Add <span data-k="book">book</span><span data-k="journal">journal</span></button>
+    </div>
+
+    <nav class="tabs" aria-label="Catalogue type"><a data-k-tab="book" href="index.html?type=book">Books</a><a data-k-tab="journal" href="index.html?type=journal">Journals &amp; Research</a></nav>
+
+    <div class="toolbar">
+        <label class="search">
+            <span class="sr-only">Search</span>
+            <input id="search" type="search" placeholder="Search this table…" autocomplete="off">
+        </label>
+        <span class="muted" id="count" aria-live="polite"></span>
+    </div>
+    <div class="card"><div id="table"></div></div>
+</main>
+<footer class="site-footer">
+    <p>&copy; <span id="yr">2026</span> Systems Plus Computer College. All rights reserved.</p>
+    <p class="site-footer__links">
+        <a href="https://www.facebook.com/SPCCCaloocanOfficial" target="_blank" rel="noopener noreferrer">Facebook</a>
+        <a href="https://www.spcc.edu.ph" target="_blank" rel="noopener noreferrer">Website</a>
+    </p>
+    <p class="site-footer__demo">Portfolio demo
+        <button type="button" data-open-notice>About this demo</button>
+        <button type="button" data-reset-demo>Reset demo data</button>
+    </p>
+</footer>
+<script>document.getElementById("yr").textContent=new Date().getFullYear()</script>
+<div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+<div id="demo-notice" class="notice" role="dialog" aria-modal="true" aria-labelledby="notice-title">
+  <div class="notice__card">
+    <p class="notice__eyebrow">Portfolio demo</p>
+    <h2 id="notice-title">This was a PHP + database website</h2>
+    <p class="notice__lead">The original <strong>Library Management System</strong> for Systems Plus Computer College was built with <strong>PHP 8</strong> and a <strong>MariaDB / MySQL database</strong>, and ran on a XAMPP server. To let you try it here without a server, I converted it to plain <strong>HTML, CSS and JavaScript</strong>.</p>
+    <div class="notice__grid">
+      <div><h3>What changed</h3>
+        <ul>
+          <li>The database is now your <strong>browser&rsquo;s local storage</strong>. Everything you add, borrow or return is saved on this device only, and nothing is sent anywhere.</li>
+          <li>The PHP pages became static HTML pages.</li>
+          <li>The PHP code that checked each request now runs in JavaScript, with the same rules: a 3-copy limit per student, no negative stock, and no archiving while copies are on loan.</li>
+        </ul>
+      </div>
+      <div><h3>Try it</h3>
+        <ul>
+          <li><strong>Student side:</strong> browse, borrow and return. Use student no. <code>20230001</code> and the name <code>Maria Santos</code> to see existing loans.</li>
+          <li><strong>Admin side:</strong> username <code>admin</code>, password <code>admin1234</code>.</li>
+          <li>The sample books, journals and loans are made up. You can reset them any time from the footer.</li>
+        </ul>
+      </div>
+    </div>
+    <button class="notice__link" type="button" data-notice-tables aria-expanded="false">See the original database tables</button>
+    <div class="notice__tables" hidden>
+      <p class="muted">Screenshots of the original MySQL tables (phpMyAdmin).</p>
+      <figure><figcaption>books</figcaption><img src="../assets/img/original/books.jpg" alt="Original database table books" loading="lazy"></figure><figure><figcaption>journal_research</figcaption><img src="../assets/img/original/journal.jpg" alt="Original database table journal_research" loading="lazy"></figure><figure><figcaption>borrowed</figcaption><img src="../assets/img/original/borrowed.jpg" alt="Original database table borrowed" loading="lazy"></figure><figure><figcaption>borrowed2</figcaption><img src="../assets/img/original/borrowed2.jpg" alt="Original database table borrowed2" loading="lazy"></figure><figure><figcaption>booklog</figcaption><img src="../assets/img/original/booklog.jpg" alt="Original database table booklog" loading="lazy"></figure><figure><figcaption>booklog2</figcaption><img src="../assets/img/original/booklog2.jpg" alt="Original database table booklog2" loading="lazy"></figure><figure><figcaption>archives</figcaption><img src="../assets/img/original/archives.jpg" alt="Original database table archives" loading="lazy"></figure><figure><figcaption>archives2</figcaption><img src="../assets/img/original/archives2.jpg" alt="Original database table archives2" loading="lazy"></figure>
+    </div>
+    <div class="notice__actions">
+      <button class="btn btn-primary" type="button" data-notice-continue>Continue to the demo</button>
+      <a class="btn btn-ghost" href="../../../works.html">Back to portfolio</a>
+    </div>
+  </div>
+</div>
+<a class="back-to-portfolio" href="../../../index.html" style="position:fixed;left:16px;bottom:16px;z-index:99999;background:rgba(255,255,255,.92);color:#000;padding:9px 16px;border-radius:999px;font:600 13px/1 system-ui,sans-serif;text-decoration:none;border:1px solid rgba(0,0,0,.12);box-shadow:0 4px 16px rgba(0,0,0,.14)">&larr; Portfolio</a>
+<script src="../assets/js/store.js"></script>
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/pages.js"></script>
+</body>
+</html>

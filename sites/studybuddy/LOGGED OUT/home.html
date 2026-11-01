@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study Buddy connects students who can help each other learn.">
+  <title>Study Buddy – Home</title>
+  <link rel="icon" href="../IMGS/cropicon.png" type="image/png">
+  <link rel="stylesheet" href="../shared/fonts.css">
+  <link rel="stylesheet" href="../shared/style.css">
+  <script src="../shared/app.js"></script>
+</head>
+<body data-root="../" data-active="home" data-auth="guest" data-member="../LOGGED%20IN/home.html">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-header" class="site-header"></header>
+  <script>window.StudyBuddy.header()</script>
+
+  <main id="main">
+    <section class="hero">
+      <h1>Meet Our Buddies!</h1>
+      <p>Find classmates who can help with what you're stuck on, and share what you know in return.</p>
+      <a class="btn btn-light" href="#buddies">Get Started</a>
+    </section>
+
+    <section class="section container" id="buddies" aria-labelledby="buddies-title">
+      <h2 class="section-title" id="buddies-title">Our Study Buddies</h2>
+      <p class="section-lead">Sign in to contact a buddy, or register to join them.</p>
+      <div id="buddies-container" class="buddy-grid" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+  <script>window.StudyBuddy.footer()</script>
+  <script src="../shared/home.js"></script>
+<a class="back-to-portfolio" href="../../../index.html" style="position:fixed;left:16px;bottom:16px;z-index:99999;background:rgba(255,255,255,.92);color:#000;padding:9px 16px;border-radius:999px;font:600 13px/1 system-ui,sans-serif;text-decoration:none;border:1px solid rgba(0,0,0,.12);box-shadow:0 4px 16px rgba(0,0,0,.14)">&larr; Portfolio</a>
+</body>
+</html>

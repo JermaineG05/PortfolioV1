@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sign in or register, then find your study buddy.">
+  <title>Study Buddy – Sign In</title>
+  <link rel="icon" href="../IMGS/cropicon.png" type="image/png">
+  <link rel="stylesheet" href="../shared/fonts.css">
+  <link rel="stylesheet" href="../shared/style.css">
+  <script src="../shared/app.js"></script>
+</head>
+<body data-root="../" data-active="buddies" data-auth="any">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-header" class="site-header"></header>
+  <script>window.StudyBuddy.header()</script>
+
+  <main id="main">
+    <!-- LOGIN -->
+    <section id="view-login" class="auth-wrap" hidden>
+      <div class="panel">
+        <h1>Login</h1>
+        <p id="login-msg" class="form-msg" role="alert"></p>
+        <form id="login-form" novalidate>
+          <div class="field">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" autocomplete="current-password" required>
+          </div>
+          <button type="submit" class="btn btn-block">Login</button>
+        </form>
+        <p class="switch">Don't have an account? <a href="#register" data-view="register">Register here</a></p>
+      </div>
+    </section>
+
+    <!-- REGISTER -->
+    <section id="view-register" class="auth-wrap" hidden>
+      <div class="panel">
+        <h1>Create your account</h1>
+        <p id="register-msg" class="form-msg" role="alert"></p>
+        <form id="register-form" novalidate>
+          <div class="field">
+            <label for="reg-name">Name</label>
+            <input type="text" id="reg-name" autocomplete="name" maxlength="60" required>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label for="reg-age">Age</label>
+              <input type="number" id="reg-age" min="13" max="100" inputmode="numeric" required>
+            </div>
+            <div class="field">
+              <label for="reg-year">Year level</label>
+              <select id="reg-year" required>
+                <option value="">Select year level</option><option value="1st">1st Year</option><option value="2nd">2nd Year</option><option value="3rd">3rd Year</option><option value="4th">4th Year</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label for="reg-major">Major</label>
+              <input type="text" id="reg-major" maxlength="60" required>
+            </div>
+            <div class="field">
+              <label for="reg-subject">Main subject</label>
+              <input type="text" id="reg-subject" maxlength="60" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="reg-help">Topics you need help with</label>
+            <textarea id="reg-help" maxlength="300" required></textarea>
+          </div>
+          <div class="field">
+            <label for="reg-canhelp">Topics you can help with</label>
+            <textarea id="reg-canhelp" maxlength="300" required></textarea>
+          </div>
+          <fieldset class="field">
+            <legend>Programming languages you use <span class="hint">(pick at least one)</span></legend>
+            <div class="check-grid"><label><input type="checkbox" name="languages" value="HTML"> HTML</label><label><input type="checkbox" name="languages" value="CSS"> CSS</label><label><input type="checkbox" name="languages" value="JavaScript"> JavaScript</label><label><input type="checkbox" name="languages" value="Python"> Python</label><label><input type="checkbox" name="languages" value="Java"> Java</label><label><input type="checkbox" name="languages" value="C++"> C++</label><label><input type="checkbox" name="languages" value="PHP"> PHP</label></div>
+          </fieldset>
+          <div class="field">
+            <label for="reg-email">Email</label>
+            <input type="email" id="reg-email" autocomplete="email" required>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label for="reg-password">Password <span class="hint">(6+ characters)</span></label>
+              <input type="password" id="reg-password" autocomplete="new-password" minlength="6" required>
+            </div>
+            <div class="field">
+              <label for="reg-confirm">Confirm password</label>
+              <input type="password" id="reg-confirm" autocomplete="new-password" minlength="6" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="reg-photo">Profile photo <span class="hint">(optional)</span></label>
+            <input type="file" id="reg-photo" accept="image/*">
+          </div>
+          <button type="submit" class="btn btn-block">Register</button>
+        </form>
+        <p class="switch">Already have an account? <a href="#login" data-view="login">Login here</a></p>
+      </div>
+    </section>
+
+    <!-- BUDDY FINDER (signed-in users only) -->
+    <section id="view-buddies" class="section container" hidden>
+      <h1 class="section-title">Available Study Buddies</h1>
+      <p class="section-lead">Filter by year, subject or language, then send a request.</p>
+      <form class="toolbar" id="filters" role="search" aria-label="Filter buddies" onsubmit="return false">
+        <div class="field">
+          <label for="filter-search">Search</label>
+          <input type="search" id="filter-search" placeholder="Name or topic">
+        </div>
+        <div class="field">
+          <label for="filter-year">Year</label>
+          <select id="filter-year"><option value="">All</option></select>
+        </div>
+        <div class="field">
+          <label for="filter-subject">Subject</label>
+          <select id="filter-subject"><option value="">All</option></select>
+        </div>
+        <div class="field">
+          <label for="filter-language">Language</label>
+          <select id="filter-language"><option value="">All</option></select>
+        </div>
+        <button type="reset" class="btn btn-outline btn-small">Clear</button>
+      </form>
+      <p id="result-count" class="result-count" aria-live="polite"></p>
+      <div id="buddy-list" class="buddy-grid"></div>
+      <p style="text-align:center;margin-top:28px"><a class="btn" href="profile.html">Go to My Profile</a></p>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+  <script>window.StudyBuddy.footer()</script>
+  <script src="aws.js"></script>
+<a class="back-to-portfolio" href="../../../index.html" style="position:fixed;left:16px;bottom:16px;z-index:99999;background:rgba(255,255,255,.92);color:#000;padding:9px 16px;border-radius:999px;font:600 13px/1 system-ui,sans-serif;text-decoration:none;border:1px solid rgba(0,0,0,.12);box-shadow:0 4px 16px rgba(0,0,0,.14)">&larr; Portfolio</a>
+</body>
+</html>
