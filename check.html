@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Upload checker</title>
+<style>
+body{font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;margin:0;padding:20px;max-width:760px;margin-inline:auto;color:#111}
+h1{font-size:1.5rem;margin:.2em 0}
+.sum{padding:14px 16px;border-radius:12px;margin:14px 0;font-weight:600}
+.ok{background:#e7f7ec;color:#0b5a25}.bad{background:#fde8e8;color:#8a1111}.wait{background:#eef1f5;color:#333}
+ul{list-style:none;padding:0;margin:0}
+li{padding:8px 10px;border-bottom:1px solid #eee;word-break:break-all;font-family:ui-monospace,Consolas,monospace;font-size:13px}
+li.miss{background:#fff3f3;color:#8a1111;font-weight:600}
+small{color:#666}
+button{font:inherit;padding:10px 16px;border-radius:10px;border:1px solid #111;background:#fff;cursor:pointer;margin:6px 0}
+</style></head><body>
+<h1>Upload checker</h1>
+<p>Open this page on your <b>published</b> site. It checks that every file of the portfolio is really online, and lists the ones that are missing.</p>
+<div id="sum" class="sum wait">Checking&hellip;</div>
+<button id="again" type="button">Check again</button>
+<p><small id="where"></small></p>
+<h2 style="font-size:1.1rem">Missing files</h2><ul id="missing"><li>&nbsp;</li></ul>
+<details style="margin-top:18px"><summary>All files (<span id="n"></span>)</summary><ul id="all"></ul></details>
+<script>
+var FILES=["about.html", "assets/Inventory_System.xlsx", "assets/about-food.jpg", "assets/about-laptop.jpg", "assets/about-setup.jpg", "assets/about-work.jpg", "assets/app-bg.jpg", "assets/app-icon.png", "assets/apps/TimesUp.apk", "assets/calendar-after.jpg", "assets/calendar-before.jpg", "assets/coffee.jpg", "assets/designs/README.txt", "assets/designs/computer-lab-rules.jpg", "assets/designs/trading-hall.jpg", "assets/designs/wedding-invitation.jpg", "assets/excel-dashboard.jpg", "assets/excel-raw.jpg", "assets/jermaine.png", "assets/library.jpg", "assets/studybuddy.jpg", "assets/video/history-of-computers-poster.jpg", "assets/video/history-of-computers.mp4", "contact.html", "fonts.css", "fonts/Arimo.woff2", "fonts/Domine.woff2", "fonts/Hanken.woff2", "fonts/README.txt", "index.html", "nav.js", "reveal.js", "sites/coffee/436609045_475814048132177_964976458050038315_n.jpg", "sites/coffee/Coffee-beans-roasting.webp", "sites/coffee/beans.webp", "sites/coffee/berry.jpg", "sites/coffee/blur.webp", "sites/coffee/blur2.jpg", "sites/coffee/boiling.jpg", "sites/coffee/brewing.css", "sites/coffee/brewing.html", "sites/coffee/brewing.jpg", "sites/coffee/brewing.js", "sites/coffee/coffee-beans.webp", "sites/coffee/coffee.jpg", "sites/coffee/coffee.png", "sites/coffee/coffeegrind.webp", "sites/coffee/coffeeroasting.jpg", "sites/coffee/fonts.css", "sites/coffee/frenchpress.webp", "sites/coffee/grinding.css", "sites/coffee/grinding.html", "sites/coffee/homepage.css", "sites/coffee/homepage.html", "sites/coffee/homepage.js", "sites/coffee/jermaine.jpg", "sites/coffee/polish.css", "sites/coffee/polish.js", "sites/coffee/pressure.jpg", "sites/coffee/rbeans.jpg", "sites/coffee/roaster.png", "sites/coffee/roasting.css", "sites/coffee/roasting.html", "sites/coffee/steeping.webp", "sites/library/README.md", "sites/library/admin/archives.html", "sites/library/admin/index.html", "sites/library/admin/logs.html", "sites/library/assets/css/fonts.css", "sites/library/assets/css/style.css", "sites/library/assets/img/bg.jpg", "sites/library/assets/img/original/archives.jpg", "sites/library/assets/img/original/archives2.jpg", "sites/library/assets/img/original/booklog.jpg", "sites/library/assets/img/original/booklog2.jpg", "sites/library/assets/img/original/books.jpg", "sites/library/assets/img/original/borrowed.jpg", "sites/library/assets/img/original/borrowed2.jpg", "sites/library/assets/img/original/journal.jpg", "sites/library/assets/img/spcc.png", "sites/library/assets/img/wow.jpg", "sites/library/assets/js/app.js", "sites/library/assets/js/auth.js", "sites/library/assets/js/pages.js", "sites/library/assets/js/store.js", "sites/library/index.html", "sites/library/login.html", "sites/library/logout.html", "sites/library/register.html", "sites/library/student/borrow.html", "sites/library/student/index.html", "sites/library/student/return.html", "sites/studybuddy/CHANGES.md", "sites/studybuddy/IMGS/cropicon.png", "sites/studybuddy/IMGS/hero.jpg", "sites/studybuddy/IMGS/icon.jpg", "sites/studybuddy/IMGS/nopfp.png", "sites/studybuddy/LOGGED IN/about.html", "sites/studybuddy/LOGGED IN/home.html", "sites/studybuddy/LOGGED OUT/about.html", "sites/studybuddy/LOGGED OUT/home.html", "sites/studybuddy/LOGIN/aws.html", "sites/studybuddy/LOGIN/aws.js", "sites/studybuddy/LOGIN/profile.html", "sites/studybuddy/LOGIN/profile.js", "sites/studybuddy/shared/app.js", "sites/studybuddy/shared/fonts.css", "sites/studybuddy/shared/home.js", "sites/studybuddy/shared/style.css", "style.css", "works.html", "works.js"];
+var base=location.href.replace(/[^\/]*$/,'');
+document.getElementById('where').textContent='Checking '+base;
+document.getElementById('n').textContent=FILES.length;
+async function exists(p){
+  var url=base+p.split('/').map(encodeURIComponent).join('/')+'?v='+Date.now();
+  try{ var r=await fetch(url,{method:'HEAD',cache:'no-store'}); if(r.status===405){ r=await fetch(url,{headers:{Range:'bytes=0-0'},cache:'no-store'}); }
+    return r.ok; }catch(e){ return null; }
+}
+async function run(){
+  var sum=document.getElementById('sum'),miss=document.getElementById('missing'),all=document.getElementById('all');
+  sum.className='sum wait'; sum.textContent='Checking '+FILES.length+' files\u2026'; miss.innerHTML=''; all.innerHTML='';
+  var missing=[],unknown=0,done=0,i=0;
+  async function worker(){ while(i<FILES.length){ var p=FILES[i++]; var ok=await exists(p);
+      var li=document.createElement('li'); li.textContent=(ok?'\u2713 ':ok===null?'? ':'\u2717 ')+p; if(ok===false){li.className='miss';missing.push(p);} if(ok===null)unknown++; all.appendChild(li);
+      done++; sum.textContent='Checking\u2026 '+done+' / '+FILES.length; } }
+  await Promise.all([worker(),worker(),worker(),worker(),worker(),worker()]);
+  if(unknown===FILES.length){ sum.className='sum bad'; sum.textContent='Couldn\u2019t check. Open this page from your published website address (https://\u2026), not from a file on your device.'; return; }
+  if(!missing.length){ sum.className='sum ok'; sum.textContent='All '+FILES.length+' files are online. Nothing is missing.'; miss.innerHTML='<li>None \u2713</li>'; }
+  else { sum.className='sum bad'; sum.textContent=missing.length+' of '+FILES.length+' files are missing. Upload them to the same folder in your repository.';
+    missing.sort().forEach(function(p){ var li=document.createElement('li'); li.className='miss'; li.textContent=p; miss.appendChild(li); }); }
+}
+document.getElementById('again').addEventListener('click',run); run();
+</script></body></html>
